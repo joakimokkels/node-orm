@@ -1,0 +1,10 @@
+<h2>Databaser</h2>
+
+<ul class="flex flex--column flex--gap-4">
+  {{#each databases}}
+    <li class="flex flex--align-center flex--gap-4">
+      <h4 class="flex__flex--1">{{ this.name }}</h4>
+      <p class="flex__flex--1">{{ this.type }}</p>
+    </li>
+  {{/each}}
+</ul>
