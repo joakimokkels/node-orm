@@ -1,13 +1,8 @@
-'use strict';
+const express = require("express");
+const HomeController = require("../controllers/HomeController");
 
-const router = require('express').Router();
-const DatabasesController = require('../controllers/DatabasesController');
+const router = express.Router();
 
-module.exports = () => {
-  router.get('/status', (req, res) => res.status(200).json({ status: 'ok' }));
+router.get("/", HomeController.index);
 
-  router.get('/', DatabasesController.Index);
-  router.get('/add', DatabasesController.Add);
-  router.post('/add', DatabasesController.AddPost);
-  return router;
-};
+module.exports = router;

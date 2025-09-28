@@ -1,35 +1,24 @@
-'use strict';
+const express = require("express");
+const exphbs = require("express-handlebars");
+const path = require("path");
 
-const express = require('express');
-const routes = require('./routes');
-const bodyParser = require('body-parser');
-const { engine } = require('express-handlebars');
+const routes = require("./routes");
 
-const HOST = '0.0.0.0'; // Listen on all network interfaces, including localHOST
-const PORT = 3000; // You can change this to any PORT you prefer
 const app = express();
 
-// Middlewares
-app.use(express.static('public'));
-app.use(bodyParser.urlencoded({ extended: true }));
+// Middleware
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// View engine setup
-app.engine('hbs', engine({
-  extname: '.hbs',
-  defaultLayout: 'main',
-  layoutsDir: __dirname + '/views/layouts/',
-  helpers: {
-    eq: function(a, b) { return a === b },
-  },
-}));
-app.set('view engine', 'hbs');
-app.set('views', __dirname + '/views');
+// Static files
+app.use(express.static(path.join(__dirname, "public")));
+
+// View engine
+app.engine(".hbs", exphbs.engine({ extname: ".hbs" }));
+app.set("view engine", ".hbs");
+app.set("views", path.join(__dirname, "views"));
 
 // Routes
-app.use('/', routes());
+app.use("/", routes);
 
-// Initialize the server
-app.listen(PORT, HOST, () => {
-  console.log(`Server is running on http://${HOST}:${PORT}`);
-});
+module.exports = app;
